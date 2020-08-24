@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SSD_NVME_DEVICE_LIST=($(nvme list | grep "Microsoft NVMe Direct Disk" | cut -d " " -f 1 || true))
+SSD_NVME_DEVICE_LIST=($(/sys/block | grep nvme | xargs -I. echo /dev/. || true))
 SSD_NVME_DEVICE_COUNT=${#SSD_NVME_DEVICE_LIST[@]}
 RAID_DEVICE=${RAID_DEVICE:-/dev/md0}
 RAID_CHUNK_SIZE=${RAID_CHUNK_SIZE:-512}  # Kilo Bytes

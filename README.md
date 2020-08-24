@@ -10,11 +10,6 @@ To use, create an AKS cluster and attach a user nodepool with NVMe-enabled size 
 ```
 az aks nodepool add -g <resourcegrou> --cluster-name <clustername> -n nvme -s Standard_L8s_v2 --labels kubernetes\.azure\.com\/aks-local-ssd=true -c 1
 ```
-**Temporary fix until [this issue](https://github.com/Azure/AKS/issues/1818) is resolved**  Shell into the node and run
-
-```
-apt-get install nvme-cli
-```
 
 Run the `aks-nvme-ssd-provisioner` DaemonSet that will scan, format and mount the NVMe devices. In the presence of multiple NVMe's, the script will create and mount a single RAID0 device under `/pv-disk`
 
