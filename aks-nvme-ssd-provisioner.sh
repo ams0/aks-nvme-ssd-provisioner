@@ -4,7 +4,7 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-SSD_NVME_DEVICE_LIST=($(/sys/block | grep nvme | xargs -I. echo /dev/. || true))
+SSD_NVME_DEVICE_LIST=($(ls /sys/block | grep nvme | xargs -I. echo /dev/. || true))
 SSD_NVME_DEVICE_COUNT=${#SSD_NVME_DEVICE_LIST[@]}
 RAID_DEVICE=${RAID_DEVICE:-/dev/md0}
 RAID_CHUNK_SIZE=${RAID_CHUNK_SIZE:-512}  # Kilo Bytes
@@ -52,4 +52,4 @@ mount -o defaults,noatime,discard,nobarrier --uuid $UUID /pv-disks/$UUID
 echo "Device $DEVICE has been mounted to /pv-disks/$UUID"
 echo "NVMe SSD provisioning is done and I will go to sleep now"
 
-sleep infinity
+#sleep infinity

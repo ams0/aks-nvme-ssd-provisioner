@@ -71,6 +71,20 @@ spec:
       serviceAccountName: local-storage-admin
       nodeSelector:
         kubernetes.azure.com/aks-local-ssd: "true"
+      initContainers:
+        - name: aks-nvme-ssd-provisioner
+          image: ams0/aks-nvme-ssd-provisioner:v1.0.2
+          imagePullPolicy: Always
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /pv-disks
+              name: local-storage
+              mountPropagation: "Bidirectional"
+      volumes:
+        - name: pv-disks
+          hostPath:
+            path: /pv-disks
       containers:
         - image: "quay.io/external_storage/local-volume-provisioner:v2.3.3"
           name: provisioner
