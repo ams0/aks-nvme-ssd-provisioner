@@ -18,3 +18,9 @@ kubectl apply -f manifests/storage-local-static-provisioner.yaml
 ```
 
 The init container will prepare the NVMe disks for use, and the app container will create the PersistentVolumes to be used by your Pods.
+
+To benchmark, run:
+
+```
+kubectl apply -f bench.yaml
+```
